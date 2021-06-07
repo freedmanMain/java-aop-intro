@@ -19,11 +19,13 @@ public class UniversityLibrary extends AbstractLibrary {
     }
 
     @PostConstruct
+    @Override
     public void init() {
         System.out.println("UniversityLibrary init() method was called");
     }
 
     @PreDestroy
+    @Override
     public void destroy() {
         System.out.println("UniversityLibrary destroy() method was called");
     }
