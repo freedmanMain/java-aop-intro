@@ -9,8 +9,10 @@ public class Main {
             AnnotationConfigApplicationContextUtil.getContext();
 
     public static void main(String[] args) {
-        AbstractLibrary universityLibraryBean = context.getBean("universityLibraryBean", AbstractLibrary.class);
-        AbstractLibrary schoolLibraryBean = context.getBean("schoolLibraryBean", AbstractLibrary.class);
+        AbstractLibrary universityLibraryBean =
+                context.getBean("universityLibraryBean", AbstractLibrary.class);
+        AbstractLibrary schoolLibraryBean =
+                context.getBean("schoolLibraryBean", AbstractLibrary.class);
 
         universityLibraryBean.getBookFromLibrary("Harry Potter and philosopher's stone");
         universityLibraryBean.returnBookIntoLibrary("Master and Margarita");

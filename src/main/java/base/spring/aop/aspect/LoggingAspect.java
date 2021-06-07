@@ -2,44 +2,72 @@ package base.spring.aop.aspect;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import java.util.Arrays;
 
 @Component
 @Aspect
+@Order(10)
 public class LoggingAspect {
     private static final Logger logger = LogManager.getLogger();
+    private static final String EMPTY_LINE = System.lineSeparator();
 
-    @Pointcut("execution(public void base.spring.aop.model.AbstractLibrary.getBookFromLibrary(String))")
-    private void getBookFromLibraryPointcut() {
+    @Before("base.spring.aop.aspect.LoggingPointcut.getBookFromLibraryPointcut()")
+    public void beforeGetBookAdvice(JoinPoint joinPoint) {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        logger.info("method=" + signature.getName() + " prepare to call");
+        logger.info("method signature=" + signature);
+        logger.info("method params=" + Arrays.toString(signature.getParameterNames()) + EMPTY_LINE);
     }
 
-    @Pointcut("execution(public void base.spring.aop.model.AbstractLibrary.returnBookIntoLibrary(String))")
-    private void returnBookIntoLibraryPointcut() {
+    @Before("base.spring.aop.aspect.LoggingPointcut.returnBookIntoLibraryPointcut()")
+    public void beforeReturnBookAdvice(JoinPoint joinPoint) {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        logger.info("method=" + signature.getName() + " prepare to call");
+        logger.info("method signature=" + signature);
+        logger.info("method params=" + Arrays.toString(signature.getParameterNames()) + EMPTY_LINE);
     }
 
-    @Pointcut("getBookFromLibraryPointcut() || returnBookIntoLibraryPointcut()")
-    private void getAndReturnBookPointcut() {
+/*
+    @Before("base.spring.aop.aspect.LoggingPointcut.getAndReturnBookPointcut()")
+    public void beforeReturnAndGetBookAdvice(JoinPoint joinPoint) {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        logger.info("method=" + signature.getName() + " was called");
+        logger.info("method signature=" + signature);
+        logger.info("method params=" + Arrays.toString(signature.getParameterNames()));
+    }
+*/
+
+    @After("base.spring.aop.aspect.LoggingPointcut.getBookFromLibraryPointcut()")
+    public void afterGetBookAdvice(JoinPoint joinPoint) {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        logger.info("method=" + signature.getName() + " was successfully completed.");
+        logger.info("method signature=" + signature);
+        logger.info("method params=" + Arrays.toString(signature.getParameterNames()) + EMPTY_LINE);
     }
 
-    @Before("getBookFromLibraryPointcut()")
-    public void beforeGetBookAdvice() {
-        logger.info("beforeGetBookAdvice: "
-                + "Method getBookFromLibrary was successfully completed.");
+    @After("base.spring.aop.aspect.LoggingPointcut.returnBookIntoLibraryPointcut()()")
+    public void afterReturnBookAdvice(JoinPoint joinPoint) {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        logger.info("method=" + signature.getName() + " was successfully completed.");
+        logger.info("method signature=" + signature);
+        logger.info("method params=" + Arrays.toString(signature.getParameterNames()) + EMPTY_LINE);
     }
 
-    @Before("returnBookIntoLibraryPointcut()")
-    public void beforeReturnBookAdvice() {
-        logger.info("beforeReturnBookAdvice: "
-                + "Method returnBookIntoLibrary was successfully completed.");
+/*
+    @After("base.spring.aop.aspect.LoggingPointcut.getAndReturnBookPointcut()")
+    private void afterReturnAndGetBookAdvice(JoinPoint joinPoint) {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        logger.info("method=" + signature.getName() + " was successfully completed.");
+        logger.info("method signature=" + signature);
+        logger.info("method params=" + Arrays.toString(signature.getParameterNames()));
     }
-
-    @Before("getAndReturnBookPointcut()")
-    private void beforeReturnAndGetBookAdvice() {
-        logger.info("beforeReturnAndGetBookAdvice: "
-                + "Method getBookFromLibrary or returnBookIntoLibrary was successfully completed.");
-    }
+*/
 }
 

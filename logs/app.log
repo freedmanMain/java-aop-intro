@@ -1,8 +1,0 @@
-2021-06-07 20:47:50,968 INFO base.spring.aop.aspect.LoggingAspect:29 beforeGetBookAdvice: Method getBookFromLibrary was successfully completed.
-2021-06-07 20:47:50,972 INFO base.spring.aop.aspect.LoggingAspect:41 beforeReturnAndGetBookAdvice: Method getBookFromLibrary or returnBookIntoLibrary was successfully completed.
-2021-06-07 20:47:50,988 INFO base.spring.aop.aspect.LoggingAspect:41 beforeReturnAndGetBookAdvice: Method getBookFromLibrary or returnBookIntoLibrary was successfully completed.
-2021-06-07 20:47:50,989 INFO base.spring.aop.aspect.LoggingAspect:35 beforeReturnBookAdvice: Method returnBookIntoLibrary was successfully completed.
-2021-06-07 20:47:50,989 INFO base.spring.aop.aspect.LoggingAspect:29 beforeGetBookAdvice: Method getBookFromLibrary was successfully completed.
-2021-06-07 20:47:50,990 INFO base.spring.aop.aspect.LoggingAspect:41 beforeReturnAndGetBookAdvice: Method getBookFromLibrary or returnBookIntoLibrary was successfully completed.
-2021-06-07 20:47:51,002 INFO base.spring.aop.aspect.LoggingAspect:41 beforeReturnAndGetBookAdvice: Method getBookFromLibrary or returnBookIntoLibrary was successfully completed.
-2021-06-07 20:47:51,003 INFO base.spring.aop.aspect.LoggingAspect:35 beforeReturnBookAdvice: Method returnBookIntoLibrary was successfully completed.
