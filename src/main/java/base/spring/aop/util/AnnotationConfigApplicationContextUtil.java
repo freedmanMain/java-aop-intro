@@ -10,7 +10,8 @@ public class AnnotationConfigApplicationContextUtil {
         try {
             context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
         } catch (Exception e) {
-            throw new RuntimeException("Can't create AnnotationConfigApplicationContext object.", e);
+            throw new RuntimeException("Can't create "
+                    + "AnnotationConfigApplicationContext object.", e);
         }
     }
 

@@ -1,8 +1,8 @@
 package base.spring.aop.model;
 
-import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import org.springframework.stereotype.Component;
 
 @Component("schoolLibraryBean")
 public class SchoolLibrary extends AbstractLibrary {

@@ -1,5 +1,6 @@
 package base.spring.aop.aspect;
 
+import java.util.Arrays;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
@@ -9,7 +10,6 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import java.util.Arrays;
 
 @Component
 @Aspect
@@ -34,7 +34,7 @@ public class LoggingAspect {
         logger.info("method params=" + Arrays.toString(signature.getParameterNames()) + EMPTY_LINE);
     }
 
-/*
+    /*
     @Before("base.spring.aop.aspect.LoggingPointcut.getAndReturnBookPointcut()")
     public void beforeReturnAndGetBookAdvice(JoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -42,7 +42,7 @@ public class LoggingAspect {
         logger.info("method signature=" + signature);
         logger.info("method params=" + Arrays.toString(signature.getParameterNames()));
     }
-*/
+    */
 
     @After("base.spring.aop.aspect.LoggingPointcut.getBookFromLibraryPointcut()")
     public void afterGetBookAdvice(JoinPoint joinPoint) {
@@ -60,7 +60,7 @@ public class LoggingAspect {
         logger.info("method params=" + Arrays.toString(signature.getParameterNames()) + EMPTY_LINE);
     }
 
-/*
+    /*
     @After("base.spring.aop.aspect.LoggingPointcut.getAndReturnBookPointcut()")
     private void afterReturnAndGetBookAdvice(JoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -68,6 +68,6 @@ public class LoggingAspect {
         logger.info("method signature=" + signature);
         logger.info("method params=" + Arrays.toString(signature.getParameterNames()));
     }
-*/
+   */
 }
 
