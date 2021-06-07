@@ -7,10 +7,10 @@ import javax.annotation.PreDestroy;
 @Component("libraryBean")
 public class Library {
     public void insertBook() {
-        System.out.println("Inserted the book");
+        System.out.println("Insert book to the shelf.");
     }
     public void getBook() {
-        System.out.println("Got the book");
+        System.out.println("Get the book from the shelf.");
     }
 
     @PostConstruct
