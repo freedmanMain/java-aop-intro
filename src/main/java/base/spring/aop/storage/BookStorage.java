@@ -1,8 +1,8 @@
 package base.spring.aop.storage;
 
+import base.spring.aop.model.Book;
 import java.util.ArrayList;
 import java.util.List;
-import base.spring.aop.model.Book;
 import org.springframework.stereotype.Component;
 
 @Component

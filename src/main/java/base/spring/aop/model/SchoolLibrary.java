@@ -1,12 +1,10 @@
 package base.spring.aop.model;
 
+import base.spring.aop.storage.BookStorage;
+import java.util.NoSuchElementException;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-
-import base.spring.aop.storage.BookStorage;
 import org.springframework.stereotype.Component;
-
-import java.util.NoSuchElementException;
 
 @Component("schoolLibraryBean")
 public class SchoolLibrary extends AbstractLibrary {

@@ -17,7 +17,8 @@ import org.springframework.stereotype.Component;
 public class LoggingAspect {
     private static final Logger logger = LogManager.getLogger();
 
-    @AfterReturning(pointcut = "base.spring.aop.aspect.LoggingPointcut.getBookFromLibraryPointcut()",
+    @AfterReturning(
+            pointcut = "base.spring.aop.aspect.LoggingPointcut.getBookFromLibraryPointcut()",
             returning = "book")
     public void afterReturningGetBookAdvice(JoinPoint joinPoint, Book book) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
