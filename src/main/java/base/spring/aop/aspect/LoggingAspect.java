@@ -1,13 +1,11 @@
 package base.spring.aop.aspect;
 
-import base.spring.aop.model.Book;
+import base.spring.aop.util.AnnotationConfigApplicationContextUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -17,20 +15,19 @@ import org.springframework.stereotype.Component;
 public class LoggingAspect {
     private static final Logger logger = LogManager.getLogger();
 
-    @AfterReturning(
-            pointcut = "base.spring.aop.aspect.LoggingPointcut.getBookFromLibraryPointcut()",
-            returning = "book")
-    public void afterReturningGetBookAdvice(JoinPoint joinPoint, Book book) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        logger.info("The " + book + " was borrowed from the library.");
-    }
-
-    @AfterThrowing(pointcut = "base.spring.aop.aspect.LoggingPointcut.getBookFromLibraryPointcut()",
-            throwing = "exception")
-    public void afterThrowingGetBookAdvice(JoinPoint joinPoint, RuntimeException exception) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        logger.error(signature.getName() + " method throw an exception. Message: "
-                + exception.getMessage(), exception);
+    @Around("base.spring.aop.aspect.LoggingPointcut.getBookFromLibraryPointcut()")
+    public Object afterThrowingGetBookAdvice(ProceedingJoinPoint point)
+            throws Throwable {
+        Object targetMethodResult = null;
+        try {
+            targetMethodResult = point.proceed();
+            logger.info("The " + targetMethodResult + " was borrowed from the library.");
+        } catch (Exception e) {
+            logger.error(point.getSignature().getName() + "method throw an exception.", e);
+            AnnotationConfigApplicationContextUtil.getContext().close();
+            throw new RuntimeException("Error! Can't find this book in storage" + e);
+        }
+        return targetMethodResult;
     }
 }
 

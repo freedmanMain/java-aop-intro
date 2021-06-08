@@ -12,10 +12,15 @@ public class Main {
     public static void main(String[] args) {
         AbstractLibrary universityLibraryBean =
                 context.getBean("universityLibraryBean", AbstractLibrary.class);
-        Book bookFromLibrary =
+
+        Book harryPotterAndPhilosophersStone =
                 universityLibraryBean.getBookFromLibrary("Harry Potter and philosopher's stone");
-        Book sherlockHolmes =
-                universityLibraryBean.getBookFromLibrary("Sherlock Holmes");
+
+        AbstractLibrary schoolLibraryBean =
+                context.getBean("schoolLibraryBean", AbstractLibrary.class);
+
+        Book geometryAndAlgebraForNewbies =
+                schoolLibraryBean.getBookFromLibrary("Basic Economics Theory");
 
         context.close();
     }
