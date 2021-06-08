@@ -8,12 +8,12 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import java.util.NoSuchElementException;
 
 @Component
 @Aspect
+@Order(10)
 public class LoggingAspect {
     private static final Logger logger = LogManager.getLogger();
 
@@ -26,9 +26,10 @@ public class LoggingAspect {
 
     @AfterThrowing(pointcut = "base.spring.aop.aspect.LoggingPointcut.getBookFromLibraryPointcut()",
             throwing = "exception")
-    public void afterThrowingGetBookAdvice(JoinPoint joinPoint, NoSuchElementException exception) {
+    public void afterThrowingGetBookAdvice(JoinPoint joinPoint, RuntimeException exception) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        logger.error(signature.getName() + " method throw an exception. Message: " + exception.getMessage(), exception);
+        logger.error(signature.getName() + " method throw an exception. Message: "
+                + exception.getMessage(), exception);
     }
 }
 

@@ -14,6 +14,8 @@ public class Main {
                 context.getBean("universityLibraryBean", AbstractLibrary.class);
         Book bookFromLibrary =
                 universityLibraryBean.getBookFromLibrary("Harry Potter and philosopher's stone");
+        Book sherlockHolmes =
+                universityLibraryBean.getBookFromLibrary("Sherlock Holmes");
 
         context.close();
     }
