@@ -2,20 +2,25 @@ package base.spring.aop.model;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import base.spring.aop.storage.BookStorage;
 import org.springframework.stereotype.Component;
+
+import java.util.NoSuchElementException;
 
 @Component("universityLibraryBean")
 public class UniversityLibrary extends AbstractLibrary {
     @Override
-    public void getBookFromLibrary(String title) {
-        System.out.println("Get book " + title
-                + " from the university library.");
+    public Book getBookFromLibrary(String title) {
+        return BookStorage.books.stream()
+                .filter(b -> b.getTitle().equals(title))
+                .findFirst()
+                .orElseThrow(() ->
+                        new NoSuchElementException("Can't get book by title " + title));
     }
 
     @Override
-    public void returnBookIntoLibrary(String book) {
-        System.out.println("Return book " + book
-                + " into the university library.");
+    public void returnBookIntoLibrary(Book book) {
+        BookStorage.books.add(book);
     }
 
     @PostConstruct

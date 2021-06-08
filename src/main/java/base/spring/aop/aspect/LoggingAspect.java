@@ -1,73 +1,34 @@
 package base.spring.aop.aspect;
 
-import java.util.Arrays;
+import base.spring.aop.model.Book;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import java.util.NoSuchElementException;
 
 @Component
 @Aspect
-@Order(10)
 public class LoggingAspect {
     private static final Logger logger = LogManager.getLogger();
-    private static final String EMPTY_LINE = System.lineSeparator();
 
-    @Before("base.spring.aop.aspect.LoggingPointcut.getBookFromLibraryPointcut()")
-    public void beforeGetBookAdvice(JoinPoint joinPoint) {
+    @AfterReturning(pointcut = "base.spring.aop.aspect.LoggingPointcut.getBookFromLibraryPointcut()",
+            returning = "book")
+    public void afterReturningGetBookAdvice(JoinPoint joinPoint, Book book) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        logger.info("method=" + signature.getName() + " prepare to call");
-        logger.info("method signature=" + signature);
-        logger.info("method params=" + Arrays.toString(signature.getParameterNames()) + EMPTY_LINE);
+        logger.info("The " + book + " was borrowed from the library.");
     }
 
-    @Before("base.spring.aop.aspect.LoggingPointcut.returnBookIntoLibraryPointcut()")
-    public void beforeReturnBookAdvice(JoinPoint joinPoint) {
+    @AfterThrowing(pointcut = "base.spring.aop.aspect.LoggingPointcut.getBookFromLibraryPointcut()",
+            throwing = "exception")
+    public void afterThrowingGetBookAdvice(JoinPoint joinPoint, NoSuchElementException exception) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        logger.info("method=" + signature.getName() + " prepare to call");
-        logger.info("method signature=" + signature);
-        logger.info("method params=" + Arrays.toString(signature.getParameterNames()) + EMPTY_LINE);
+        logger.error(signature.getName() + " method throw an exception. Message: " + exception.getMessage(), exception);
     }
-
-    /*
-    @Before("base.spring.aop.aspect.LoggingPointcut.getAndReturnBookPointcut()")
-    public void beforeReturnAndGetBookAdvice(JoinPoint joinPoint) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        logger.info("method=" + signature.getName() + " was called");
-        logger.info("method signature=" + signature);
-        logger.info("method params=" + Arrays.toString(signature.getParameterNames()));
-    }
-    */
-
-    @After("base.spring.aop.aspect.LoggingPointcut.getBookFromLibraryPointcut()")
-    public void afterGetBookAdvice(JoinPoint joinPoint) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        logger.info("method=" + signature.getName() + " was successfully completed.");
-        logger.info("method signature=" + signature);
-        logger.info("method params=" + Arrays.toString(signature.getParameterNames()) + EMPTY_LINE);
-    }
-
-    @After("base.spring.aop.aspect.LoggingPointcut.returnBookIntoLibraryPointcut()()")
-    public void afterReturnBookAdvice(JoinPoint joinPoint) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        logger.info("method=" + signature.getName() + " was successfully completed.");
-        logger.info("method signature=" + signature);
-        logger.info("method params=" + Arrays.toString(signature.getParameterNames()) + EMPTY_LINE);
-    }
-
-    /*
-    @After("base.spring.aop.aspect.LoggingPointcut.getAndReturnBookPointcut()")
-    private void afterReturnAndGetBookAdvice(JoinPoint joinPoint) {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        logger.info("method=" + signature.getName() + " was successfully completed.");
-        logger.info("method signature=" + signature);
-        logger.info("method params=" + Arrays.toString(signature.getParameterNames()));
-    }
-   */
 }
 
